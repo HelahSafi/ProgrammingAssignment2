@@ -3,25 +3,17 @@
 
 ## Write a short comment describing this function
 
-##library(MASS) is used to calculate inverse for non squared as well as square matrices
-
-library(MASS)
-
-
 makeCacheMatrix <- function(x = matrix()) {
 
-  inv<-Null              #initializing inverse as null
+  J<-Null              #initializing J as null
   set<-function(y){
     x<<-y
-    inv<<-NULL
+    J<<-NULL
   }
   get<-function()x          #function to get matrix x
-  setinv<-function(inverse)inv<<-inverse
-  getinv<-function(){
-    inver<-ginv(x)
-    inver%*%x              #function to obtain inverse of the matrix
-  }
-  list(set= set, get = get, setinv= setinv, getinv= getinv)
+  setinverse<-function(inverse) J<<-inverse
+  getinvverse<-function() J 
+  list(set= set, get = get, setinverse= setinverse, getinverse= getinverse)
 }
 
 
@@ -30,14 +22,14 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
   
-  inv<-x$getinv()
-  if (!is.null(inv)) {         #checking whether inverse is null
+  J<-x$getinverse()
+  if (!is.null(J)) {         #checking whether J is null
     message ("getting cached data!")
-    return(inv)               #returns inverse value
+    return(J)               #returns J value
   }
   data<-x$get()
-  inv<-solve(data,...)      #calculate inverse value
-  x$setinv(inv)
-  inv
+  J<-solve(data,...)      #calculate J value
+  x$setinverse(J)
+  J
         ## Return a matrix that is the inverse of 'x'
 }
